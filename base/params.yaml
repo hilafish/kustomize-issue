@@ -1,0 +1,82 @@
+varReference:
+- kind: Deployment
+  path: spec/template/spec/nodeSelector
+- kind: ClusterRoleBinding
+  path: metadata/name
+
+- kind: ClusterRoleBinding
+  path: metadata/name
+- kind: ClusterRoleBinding
+  path: roleRef/name
+- kind: ClusterRoleBinding
+  path: subjects/name
+- kind: ClusterRoleBinding
+  path: subjects/namespace
+
+- kind: ClusterRole
+  path: metadata/name
+
+- kind: Kustomization
+  path: namespace
+- kind: Kustomization
+  path: commonLabels
+- kind: Kustomization
+  path: configMapGenerator/name
+- kind: Kustomization
+  path: vars
+
+- kind: ConfigMap
+  path: metadata
+
+- kind: HorizontalPodAutoscaler
+  path: metadata/namespace
+- kind: HorizontalPodAutoscaler
+  path: metadata/name
+- kind: HorizontalPodAutoscaler
+  path: metadata/name
+- kind: HorizontalPodAutoscaler
+  path: spec/scaleTargetRef/name
+
+- kind: Deployment
+  path: metadata
+- kind: Deployment
+  path: metadata/annotations
+- kind: Deployment
+  path: spec/selector/matchLabels
+- kind: Deployment
+  path: spec/template/spec/containers/args
+- kind: Deployment
+  path: spec/template/spec/serviceAccountName
+- kind: Deployment
+  path: spec/template/spec/containers/name
+- kind: Deployment
+  path: spec/selector/matchLabels
+- kind: Deployment
+  path: spec/template/metadata/labels
+
+- kind: Service
+  path: metadata/name
+- kind: Service
+  path: metadata/namespace
+- kind: Service
+  path: spec/selector
+
+- kind: ServiceAccount
+  path: metadata
+
+- kind: Role
+  path: metadata
+
+
+- kind: RoleBinding
+  path: subjects/name
+- kind: RoleBinding
+  path: subjects/namespace
+- kind: RoleBinding
+  path: metadata
+- kind: RoleBinding
+  path: roleRef/name
+
+
+
+

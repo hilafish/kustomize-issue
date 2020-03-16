@@ -1,0 +1,38 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: nginx-ingress-$(APP)
+commonLabels:
+  app.kubernetes.io/name: nginx-ingress-$(APP)
+  app.kubernetes.io/part-of: nginx-ingress-$(APP)
+
+resources:
+- deployment.yaml
+- role-binding.yaml
+- role.yaml
+- service-account.yaml
+- service.yaml
+- cluster-role.yaml
+- cluster-role-binding.yaml
+- hpa.yaml
+- nginx-ingress-cm.yaml
+
+vars:
+- fieldref:
+    fieldpath: data.app
+  name: APP
+  objref:
+    kind: ConfigMap
+    name: configmap-nginx-controller-parameters
+    apiVersion: v1
+
+
+configMapGenerator:
+- name: configmap-nginx-controller-parameters
+  envs:
+    - nginx-controller-params
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+#configurations:
+#- params.yaml

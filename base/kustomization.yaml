@@ -1,0 +1,30 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - deployments
+  - nginx-controllers/app1
+  - nginx-controllers/app2
+  - nginx_ingress.yaml
+
+configMapGenerator:
+- name: configmap-parameters
+  envs:
+  - params
+- name: namespace-here-configmap-common
+  literals:
+  - ENV=${PER_ENVIRONMENT}
+
+generatorOptions:
+  disableNameSuffixHash: true
+vars:
+- name: node_selector
+  objref:
+    kind: ConfigMap
+    name: configmap-parameters
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.node_selector
+
+configurations:
+- params.yaml

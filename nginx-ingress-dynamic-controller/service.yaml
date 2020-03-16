@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-ingress-$(APP)
+spec:
+  externalTrafficPolicy: Cluster
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+    - name: https
+      port: 443
+      targetPort: https

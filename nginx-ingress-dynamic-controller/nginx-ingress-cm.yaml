@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-ingress-configuration-$(APP)
+data:
+  large-client-header-buffers: "4 64k"
+  client-body-buffer-size: "10m"

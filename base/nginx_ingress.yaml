@@ -1,0 +1,59 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.allow-http: "false"
+    kubernetes.io/ingress.class: nginx-internal
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    ingress.kubernetes.io/proxy-body-size: "5g"
+    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+  name: broker-friend-ingress
+spec:
+  backend:
+    serviceName: broker-friend
+    servicePort: 8080
+  rules:
+    - host: "*.yoyo.com"
+      http:
+        paths:
+          - backend:
+              serviceName: broker-friend
+              servicePort: 8080
+            path: /broker-friend
+  tls:
+  - hosts:
+    - '*.yoyo.com'
+    secretName: yoyo.com
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.allow-http: "false"
+    kubernetes.io/ingress.class: nginx-internal
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    ingress.kubernetes.io/proxy-body-size: "5g"
+  name: broker-ingress
+spec:
+  backend:
+    serviceName: broker
+    servicePort: 8080
+  rules:
+    - host: "*.yoyo.com"
+      http:
+        paths:
+          - backend:
+              serviceName: broker
+              servicePort: 8080
+            path: /
+    - host: "*.yoyo.com"
+      http:
+        paths:
+          - backend:
+              serviceName: broker
+              servicePort: 8080
+            path: /
+  tls:
+  - hosts:
+    - '*.yoyo.com'
+    secretName: yoyo.com

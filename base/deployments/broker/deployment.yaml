@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  name: broker
+spec:
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        prometheus.io/port: "8899"
+        prometheus.io/scrape: "true"
+    spec:
+      containers:
+      - name: broker
+        command:
+        - /go/bin/broker
+        envFrom:
+        - configMapRef:
+            name: agent-gateway-api-configmap-common
+            optional: false
+        image: broker
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /ping/
+            port: 8899
+            scheme: HTTP
+          periodSeconds: 15
+          successThreshold: 1
+          timeoutSeconds: 1
+        ports:
+        - containerPort: 7032
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /ping/
+            port: 8899
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            cpu: "1"
+            memory: 4Gi
+          requests:
+            cpu: "0.5"
+            memory: 4Gi
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        type: $(node_selector)
+      restartPolicy: Always
